@@ -10,15 +10,12 @@ import sys
 
 
 def init_params():
-    # Layer 1: 784 inputs -> 10 neurons
     w1 = np.random.randn(10, 784) * np.sqrt(2. / 784)
     b1 = np.zeros((10, 1))
     
-    # Layer 2: 10 inputs -> 10 neurons
     w2 = np.random.randn(10, 10) * np.sqrt(2. / 10)
     b2 = np.zeros((10, 1))
     
-    # Layer 3: 10 inputs -> 10 neurons
     w3 = np.random.randn(10, 10) * np.sqrt(2. / 10)
     b3 = np.zeros((10, 1))
     
