@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.datasets import fetch_openml
 import matplotlib.pyplot as plt
+import sys
 
 
 
@@ -123,35 +124,48 @@ def visualize_network(k, x, y, y_hat):
 
 def load_trained_params(file_path):
     data = np.load(file_path)
-    return data['W1'], data['b1'], data['W2'], data['b2']
+    return data['W1'], data['b1'], data['W2'], data['b2'], data['W3'], data['b3']
 
 
-mnist = fetch_openml('mnist_784', version=1)
-X = mnist.data.to_numpy().astype('float32') / 255.0
-y = mnist.target.to_numpy().astype('int')
 
-del mnist
+def main(args):
+    mnist = fetch_openml('mnist_784', version=1)
+    X = mnist.data.to_numpy().astype('float32') / 255.0
+    y = mnist.target.to_numpy().astype('int')
 
-
-split = int(len(X)*0.8)
-X_train = X[:split]
-X_test = X[split:]
-Y_train = y[:split]
-Y_test = y[split:]
+    del mnist
 
 
-X_train = X_train.T
+    split = int(len(X)*0.8)
+    X_train = X[:split]
+    X_test = X[split:]
+    Y_train = y[:split]
+    Y_test = y[split:]
 
 
-W1, b1, W2, b2, W3, b3, y_hat = gradient_descent(X_train, Y_train, X_test, Y_test, 0.1, 500)
-# w1, b1, w2, b2 = load_trained_params('mnist_weights.npz')
+    X_train = X_train.T
 
-test_accuracy, y_hat = test_model(W1, b1, W2, b2, W3, b3, X_test.T, Y_test)
-print(f'Test Accuracy: {test_accuracy:.2%}')
 
-np.savez('mnist_weights.npz', W1=W1, b1=b1, W2=W2, b2=b2, W3=W3, b3=b3)
-print("Model weights saved to mnist_weights.npz")
+    if args[1] == 'train':
+        W1, b1, W2, b2, W3, b3, y_hat = gradient_descent(X_train, Y_train, X_test, Y_test, 0.1, 500)
+        np.savez('mnist_weights.npz', W1=W1, b1=b1, W2=W2, b2=b2, W3=W3, b3=b3)
+        print("Model weights saved to mnist_weights.npz")
+    elif args[1] == 'test':
+        W1, b1, W2, b2, W3, b3 = load_trained_params('mnist_weights.npz')
+        test_accuracy, y_hat = test_model(W1, b1, W2, b2, W3, b3, X_test.T, Y_test)
+        print(f'Test Accuracy: {test_accuracy:.2%}')
+        for i in range(5):
+            visualize_network(np.random.randint(0, len(X_test)), X_test, Y_test, y_hat)
+    else:
+        print('''usage:
+    python nueralnet.py 
+options:
+    test 
+    train''')
 
-for i in range(5):
-    visualize_network(np.random.randint(0, len(X_test)), X_test, Y_test, y_hat)
 
+
+
+
+if __name__ == '__main__':
+    main(sys.argv)
