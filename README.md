@@ -74,7 +74,7 @@ The repository includes a visualization module that selects random images from t
 
 ## 🎓 About the Author
 
-I am a Data Science student at the University of Texas at Arlington with a background in Psychology. I am passionate about the intersection of human visual perception and machine learning architecture. This project serves as a cornerstone of my understanding of neural network fundamentals.
+I am a Data Science student at the University of Texas at Arlington with a background in software enginnering. I am passionate about the intersection of human visual perception and machine learning architecture. This project serves as a cornerstone of my understanding of neural network fundamentals.
 
 ---
 *Developed as a "First Principles" exploration of Deep Learning.*

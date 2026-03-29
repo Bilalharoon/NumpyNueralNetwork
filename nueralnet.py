@@ -91,7 +91,7 @@ def gradient_descent(X, Y, x_test, y_test, alpha, iterations):
 
         if i % 10 == 0:
             predictions = get_predictions(a3)
-            test_accuracy, y_hat = test_model(w1, b1, w2, b2, w3, b3, X_test.T, y_test)
+            test_accuracy, y_hat = test_model(w1, b1, w2, b2, w3, b3, x_test.T, y_test)
             print(f"Iteration: {i} | Train Accuracy: {get_accuracy(predictions, Y):.2%} | Test Accuracy {test_accuracy:.2%}")
             
     return w1, b1, w2, b2, w3, b3, y_hat
